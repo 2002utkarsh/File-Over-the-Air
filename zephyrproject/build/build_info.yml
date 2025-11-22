@@ -1,0 +1,5 @@
+west:
+  command: C:\Users\Utkarsh Gupta\AppData\Local\Programs\Python\Python313\Scripts\west
+    build -p always -b arduino_nano_33_ble my_imu_app
+  topdir: C:\UG\Uni\Capstone_Embedded\zephyrproject
+  version: 1.5.0

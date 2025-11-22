@@ -1,0 +1,2 @@
+# Load Zephyr board defconfig descriptions.
+osource "C:/UG/Uni/Capstone_Embedded/zephyrproject/zephyr/boards/arduino/nano_33_ble/Kconfig.defconfig"

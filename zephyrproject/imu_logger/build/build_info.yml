@@ -1,0 +1,64 @@
+cmake:
+  application:
+    configuration-dir: 'C:/UG/Uni/Capstone_Embedded/zephyrproject/imu_logger'
+    source-dir: 'C:/UG/Uni/Capstone_Embedded/zephyrproject/imu_logger'
+  board:
+    name: 'arduino_nano_33_ble'
+    path:
+     - 'C:/UG/Uni/Capstone_Embedded/zephyrproject/zephyr/boards/arduino/nano_33_ble'
+    qualifiers: 'nrf52840'
+    revision: ''
+  devicetree:
+    bindings-dirs:
+     - 'C:/UG/Uni/Capstone_Embedded/zephyrproject/zephyr/dts/bindings'
+    files:
+     - 'C:/UG/Uni/Capstone_Embedded/zephyrproject/zephyr/boards/arduino/nano_33_ble/arduino_nano_33_ble.dts'
+     - 'C:/UG/Uni/Capstone_Embedded/zephyrproject/imu_logger/app.overlay'
+    include-dirs:
+     - 'C:/UG/Uni/Capstone_Embedded/zephyrproject/modules/hal/ambiq/dts'
+     - 'C:/UG/Uni/Capstone_Embedded/zephyrproject/modules/hal/atmel/include'
+     - 'C:/UG/Uni/Capstone_Embedded/zephyrproject/modules/hal/bouffalolab/include'
+     - 'C:/UG/Uni/Capstone_Embedded/zephyrproject/modules/hal/bouffalolab/include/zephyr'
+     - 'C:/UG/Uni/Capstone_Embedded/zephyrproject/modules/hal/gigadevice/include'
+     - 'C:/UG/Uni/Capstone_Embedded/zephyrproject/modules/hal/microchip/include'
+     - 'C:/UG/Uni/Capstone_Embedded/zephyrproject/modules/hal/microchip/dts'
+     - 'C:/UG/Uni/Capstone_Embedded/zephyrproject/modules/hal/nuvoton/dts'
+     - 'C:/UG/Uni/Capstone_Embedded/zephyrproject/modules/hal/nxp/dts'
+     - 'C:/UG/Uni/Capstone_Embedded/zephyrproject/modules/hal/stm32/dts'
+     - 'C:/UG/Uni/Capstone_Embedded/zephyrproject/modules/hal/ti/dts'
+     - 'C:/UG/Uni/Capstone_Embedded/zephyrproject/zephyr/include'
+     - 'C:/UG/Uni/Capstone_Embedded/zephyrproject/zephyr/include/zephyr'
+     - 'C:/UG/Uni/Capstone_Embedded/zephyrproject/zephyr/dts/common'
+     - 'C:/UG/Uni/Capstone_Embedded/zephyrproject/zephyr/dts/vendor'
+     - 'C:/UG/Uni/Capstone_Embedded/zephyrproject/zephyr/dts/rx'
+     - 'C:/UG/Uni/Capstone_Embedded/zephyrproject/zephyr/dts/x86'
+     - 'C:/UG/Uni/Capstone_Embedded/zephyrproject/zephyr/dts/xtensa'
+     - 'C:/UG/Uni/Capstone_Embedded/zephyrproject/zephyr/dts/sparc'
+     - 'C:/UG/Uni/Capstone_Embedded/zephyrproject/zephyr/dts/riscv'
+     - 'C:/UG/Uni/Capstone_Embedded/zephyrproject/zephyr/dts/posix'
+     - 'C:/UG/Uni/Capstone_Embedded/zephyrproject/zephyr/dts/arm64'
+     - 'C:/UG/Uni/Capstone_Embedded/zephyrproject/zephyr/dts/arm'
+     - 'C:/UG/Uni/Capstone_Embedded/zephyrproject/zephyr/dts/arc'
+     - 'C:/UG/Uni/Capstone_Embedded/zephyrproject/zephyr/dts'
+    user-files:
+     - 'C:/UG/Uni/Capstone_Embedded/zephyrproject/imu_logger/app.overlay'
+  kconfig:
+    files:
+     - 'C:/UG/Uni/Capstone_Embedded/zephyrproject/zephyr/boards/arduino/nano_33_ble/arduino_nano_33_ble_defconfig'
+     - 'C:/UG/Uni/Capstone_Embedded/zephyrproject/imu_logger/prj.conf'
+    user-files:
+     - 'C:/UG/Uni/Capstone_Embedded/zephyrproject/imu_logger/prj.conf'
+  toolchain:
+    name: 'zephyr'
+    path: 'C:/zephyr-sdk-0.17.4'
+  vendor-specific:
+    nordic:
+      svdfile: 'C:/UG/Uni/Capstone_Embedded/zephyrproject/modules/hal/nordic/nrfx/mdk/nrf52840.svd'
+  zephyr:
+    version: '4.3.0-rc1'
+    zephyr-base: 'C:/UG/Uni/Capstone_Embedded/zephyrproject/zephyr'
+version: '0.1.0'
+west:
+  command: 'C:\UG\Uni\Capstone_Embedded\venv\Scripts\west build -p always -b arduino_nano_33_ble'
+  topdir: 'C:\UG\Uni\Capstone_Embedded\zephyrproject'
+  version: '1.5.0'

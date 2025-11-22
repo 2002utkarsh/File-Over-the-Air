@@ -1,0 +1,28 @@
+/*
+ * Copyright (c) 2023
+ *
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+/* The Arduino Nano 33 BLE Rev2 uses BMI270 and BMM150 instead of LSM9DS1 */
+
+/* Disable default sensors instead of deleting them to avoid alias errors */
+&lsm9ds1 {
+	status = "disabled";
+};
+
+&lsm9ds1_mag {
+	status = "disabled";
+};
+
+&i2c1 {
+	bmi270: bmi270@68 {
+		compatible = "bosch,bmi270";
+		reg = <0x68>;
+	};
+
+	bmm150: bmm150@10 {
+		compatible = "bosch,bmm150";
+		reg = <0x10>;
+	};
+};
