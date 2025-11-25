@@ -39,7 +39,7 @@ if (-not $bossacPath) {
 # ----------------------------
 #  Find the latest zephyr.bin
 # ----------------------------
-$projectPath = "C:\UG\Uni\Capstone_Embedded\zephyrproject\imu_logger\build\zephyr"
+$projectPath = "C:\UG\Uni\Capstone_Embedded\zephyrproject\build\zephyr"
 $binFile = Get-ChildItem -Path $projectPath -Filter "zephyr.bin" -Recurse -ErrorAction SilentlyContinue |
            Sort-Object LastWriteTime -Descending |
            Select-Object -First 1

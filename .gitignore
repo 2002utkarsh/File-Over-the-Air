@@ -1,0 +1,8 @@
+zephyrproject/build/
+__pycache__/
+*.pyc
+.vscode/
+*.hex
+*.bin
+*.elf
+*.map
