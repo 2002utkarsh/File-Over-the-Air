@@ -41,9 +41,13 @@ jobs:
           pip install -r zephyr/scripts/requirements.txt
 
       - name: Setup Zephyr SDK
-        uses: zephyrproject-rtos/action-zephyr-sdk@v1.13.0
-        with:
-          toolchains: arm-zephyr-eabi
+        run: |
+          wget https://github.com/zephyrproject-rtos/sdk-ng/releases/download/v0.17.0/zephyr-sdk-0.17.0_linux-x86_64.tar.xz
+          wget -O - https://github.com/zephyrproject-rtos/sdk-ng/releases/download/v0.17.0/sha256.sum | shasum --check --ignore-missing
+          tar xvf zephyr-sdk-0.17.0_linux-x86_64.tar.xz
+          cd zephyr-sdk-0.17.0
+          ./setup.sh -t arm-zephyr-eabi -h -c
+          echo "ZEPHYR_SDK_INSTALL_DIR=$(pwd)" >> $GITHUB_ENV
 
       - name: Build Firmware
         working-directory: ./zephyr-workspace
