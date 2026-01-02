@@ -1,0 +1,68 @@
+name: FOTA Build & Deploy
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - name: Install West and Boto3
+        run: |
+          pip install west boto3
+          echo "$HOME/.local/bin" >> $GITHUB_PATH
+
+      - name: Initialize Zephyr Workspace
+        run: |
+          # Initialize a new workspace to hold the Zephyr OS
+          west init zephyr-workspace
+          cd zephyr-workspace
+          # Update to pull the Zephyr modules (using shallow clone for speed if possible, but standard for reliability)
+          west update --narrow --fetch-opt=--depth=1
+          west zephyr-export
+
+      - name: Install Zephyr Dependencies
+        working-directory: ./zephyr-workspace
+        run: |
+          pip install -r zephyr/scripts/requirements.txt
+
+      - name: Setup Zephyr SDK
+        uses: zephyrproject-rtos/action-zephyr-sdk@v1.13.0
+        with:
+          toolchains: arm-zephyr-eabi
+
+      - name: Build Firmware
+        working-directory: ./zephyr-workspace
+        run: |
+          # Build the application located in the parent directory (repo root/file_update_system)
+          # Use Newlib as we discovered locally it's required
+          west build -p always -b arduino_nano_33_ble ../file_update_system -- -DCONFIG_NEWLIB_LIBC=y
+
+      - name: Deploy to AWS S3
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_S3_BUCKET: ${{ secrets.AWS_S3_BUCKET }}
+        run: |
+          # Extract version from tag (e.g., v1.0.0 -> 1.0.0)
+          VERSION=${GITHUB_REF#refs/tags/v}
+          echo "Deploying version $VERSION"
+          
+          # Run the script
+          python3 file_update_system/scripts/deploy_firmware.py \
+            --file zephyr-workspace/build/zephyr/zephyr.bin \
+            --bucket $AWS_S3_BUCKET \
+            --version $VERSION

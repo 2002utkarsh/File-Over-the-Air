@@ -1,1 +1,0 @@
-"mcuboot":"C:/UG/Uni/Capstone_Embedded/zephyrproject/bootloader/mcuboot":"C:/UG/Uni/Capstone_Embedded/zephyrproject/bootloader/mcuboot/boot/zephyr/sysbuild"

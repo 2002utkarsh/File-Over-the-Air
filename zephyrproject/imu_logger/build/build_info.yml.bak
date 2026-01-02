@@ -1,4 +1,0 @@
-west:
-  command: C:\UG\Uni\Capstone_Embedded\venv\Scripts\west build -p always -b arduino_nano_33_ble
-  topdir: C:\UG\Uni\Capstone_Embedded\zephyrproject
-  version: 1.5.0

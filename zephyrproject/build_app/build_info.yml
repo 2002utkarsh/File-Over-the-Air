@@ -1,5 +1,5 @@
 west:
   command: C:\Users\Utkarsh Gupta\AppData\Local\Programs\Python\Python313\Scripts\west
-    build -b native_sim ..\file_update_system -p
+    build -b native_sim fota_app --pristine --build-dir build_app
   topdir: C:\UG\Uni\FOTO_Project\zephyrproject
   version: 1.5.0
