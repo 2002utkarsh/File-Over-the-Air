@@ -1,0 +1,12 @@
+/ {
+    chosen {
+        zephyr,console = &uart0;
+        zephyr,shell-uart = &uart0;
+    };
+};
+
+/* 
+ * Native POSIX Configuration
+ * This overlay provides basic configuration for running on Linux
+ * Hardware peripherals are mocked or not available
+ */

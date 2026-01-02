@@ -1,0 +1,54 @@
+/ {
+    chosen {
+        /* Direct console output to the hardware UART (pins 0/1) 
+           instead of the USB cable */
+        zephyr,console = &uart0;
+        zephyr,shell-uart = &uart0;
+        zephyr,code-partition = &code_partition;
+    };
+};
+
+/* uart0 is enabled and set to default */
+&uart0 {
+    status = "okay";
+    current-speed = <115200>;
+};
+
+/* Flash Structure */
+&flash0 {
+    /* Delete the existing partitions in devicetree */
+    /delete-node/ partitions;
+
+    partitions {
+        compatible = "fixed-partitions";
+        #address-cells = <1>;
+        #size-cells = <1>;
+
+        /*  BOOTLOADER (0x0 - 0xC000)
+         *   IMP: DO NOT RESIZE
+        */
+        boot_partition: partition@0 {
+            label = "mcuboot";
+            reg = <0x00000000 0x00010000>;
+        };
+        
+        // TODO: Make these configurable through config options
+
+        /* Source Code (0xC000 - 0x80000)
+         * Size: ~464 KB
+         * Can be Resized Make sure to resize the FS as well
+         */
+        code_partition: partition@c000 {
+            label = "image-0";
+            reg = <0x00010000 0x00074000>;
+        };
+
+        /* LITTLEFS STORAGE (0x80000 - 0x100000)
+         * Size: ~512 KB
+         */
+        storage_partition: partition@80000 {
+            label = "storage";
+            reg = <0x00080000 0x00080000>;
+        };
+    };
+};
