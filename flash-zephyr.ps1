@@ -39,14 +39,15 @@ if (-not $bossacPath) {
 # ----------------------------
 #  Find the latest zephyr.bin
 # ----------------------------
-$projectPath = "C:\UG\Uni\Capstone_Embedded\zephyrproject\build\zephyr"
+$scriptDir = Split-Path -Parent $MyInvocation.MyCommand.Definition
+$projectPath = Join-Path $scriptDir "zephyrproject\build\zephyr"
 $binFile = Get-ChildItem -Path $projectPath -Filter "zephyr.bin" -Recurse -ErrorAction SilentlyContinue |
            Sort-Object LastWriteTime -Descending |
            Select-Object -First 1
 
 if (-not $binFile) {
     # Fallback to blinky sample
-    $blinkyPath = "C:\UG\Uni\Capstone_Embedded\zephyrproject\zephyr\samples\basic\blinky\build\zephyr\zephyr.bin"
+    $blinkyPath = Join-Path $scriptDir "zephyrproject\zephyr\samples\basic\blinky\build\zephyr\zephyr.bin"
     if (Test-Path $blinkyPath) {
         $binFile = Get-Item $blinkyPath
         Write-Info "Using fallback build from: $($binFile.FullName)"

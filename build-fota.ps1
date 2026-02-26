@@ -25,10 +25,10 @@ if ($Clean) {
 
 if ($Test) {
     Write-Host "Running tests with Twister..." -ForegroundColor Yellow
-    & "C:\UG\Uni\FOTO_Project\venv\Scripts\west.exe" twister -p $Board -T fota_app --inline-logs
+    & "C:\UG\Uni\FOTO_Project\venv\Scripts\west.exe" twister -p $Board -T ../file_update_system --inline-logs
 } else {
     Write-Host "Building for board: $Board" -ForegroundColor Yellow
-    & "C:\UG\Uni\FOTO_Project\venv\Scripts\west.exe" build -b $Board fota_app -p
+    & "C:\UG\Uni\FOTO_Project\venv\Scripts\west.exe" build -b $Board ../file_update_system -p
     
     if ($LASTEXITCODE -eq 0) {
         Write-Host "`nBuild successful!" -ForegroundColor Green
