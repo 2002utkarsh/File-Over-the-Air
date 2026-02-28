@@ -14,7 +14,20 @@
     current-speed = <115200>;
 };
 
-/* Flash Structure */
+/* Flash Layout for MCUboot A/B Swap
+ *
+ * Total: 1 MB (0x100000)
+ *
+ * +-------------------+----------+--------+------------------------------+
+ * | Partition         | Address  | Size   | Purpose                      |
+ * +-------------------+----------+--------+------------------------------+
+ * | boot_partition    | 0x00000  | 48 KB  | MCUboot bootloader           |
+ * | code_partition    | 0x0C000  | 232 KB | Primary image slot (image-0) |
+ * | secondary_partition| 0x46000 | 232 KB | Secondary image slot (image-1)|
+ * | scratch_partition | 0x80000  | 16 KB  | MCUboot swap scratch area    |
+ * | storage_partition | 0x84000  | 496 KB | LittleFS / NVS storage       |
+ * +-------------------+----------+--------+------------------------------+
+ */
 &flash0 {
     /* Delete the existing partitions in devicetree */
     /delete-node/ partitions;
@@ -24,31 +37,50 @@
         #address-cells = <1>;
         #size-cells = <1>;
 
-        /*  BOOTLOADER (0x0 - 0xC000)
-         *   IMP: DO NOT RESIZE
-        */
+        /* MCUboot Bootloader (0x00000 - 0x0C000)
+         * Size: 48 KB
+         * DO NOT RESIZE — MCUboot binary must fit here
+         */
         boot_partition: partition@0 {
             label = "mcuboot";
-            reg = <0x00000000 0x00010000>;
+            reg = <0x00000000 0x0000C000>;
         };
-        
-        // TODO: Make these configurable through config options
 
-        /* Source Code (0xC000 - 0x80000)
-         * Size: ~464 KB
-         * Can be Resized Make sure to resize the FS as well
+        /* Primary Image Slot (0x0C000 - 0x46000)
+         * Size: 232 KB
+         * This is where the active application runs from
          */
         code_partition: partition@c000 {
             label = "image-0";
-            reg = <0x00010000 0x00074000>;
+            reg = <0x0000C000 0x0003A000>;
         };
 
-        /* LITTLEFS STORAGE (0x80000 - 0x100000)
-         * Size: ~512 KB
+        /* Secondary Image Slot (0x46000 - 0x80000)
+         * Size: 232 KB
+         * New firmware is staged here before MCUboot swap
+         * Must be same size as primary slot for atomic swap
          */
-        storage_partition: partition@80000 {
+        secondary_partition: partition@46000 {
+            label = "image-1";
+            reg = <0x00046000 0x0003A000>;
+        };
+
+        /* MCUboot Scratch Partition (0x80000 - 0x84000)
+         * Size: 16 KB
+         * Used during swap for power-loss recovery
+         * Must be >= largest sector size of image slots
+         */
+        scratch_partition: partition@80000 {
+            label = "image-scratch";
+            reg = <0x00080000 0x00004000>;
+        };
+
+        /* LittleFS / NVS Storage (0x84000 - 0x100000)
+         * Size: 496 KB
+         */
+        storage_partition: partition@84000 {
             label = "storage";
-            reg = <0x00080000 0x00080000>;
+            reg = <0x00084000 0x0007C000>;
         };
     };
 };
