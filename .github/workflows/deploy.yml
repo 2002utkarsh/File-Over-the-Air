@@ -66,7 +66,8 @@ jobs:
           VERSION=${GITHUB_REF#refs/tags/v}
           echo "Deploying version $VERSION"
           
-          # Run the script
+          # Deploy firmware with SHA-256 verification
+          # The deploy script computes SHA-256 and includes it in manifest.json
           python3 file_update_system/scripts/deploy_firmware.py \
             --file zephyr-workspace/build/zephyr/zephyr.bin \
             --bucket $AWS_S3_BUCKET \
