@@ -135,4 +135,4 @@ MIT License
 
 **Utkarsh Gupta**
 - GitHub: [@2002utkarsh](https://github.com/2002utkarsh)
-- Repository: [File-Over-the-Air](https://github.com/2002utkarsh/File-Over-the-Air)
+- Repository: [Firmware-Over-the-Air](https://github.com/2002utkarsh/Firmware-Over-the-Air)
