@@ -1,4 +1,4 @@
-# FOTA (File Over-The-Air) Update System
+# FOTA (Firmware Over-The-Air) Update System
 
 A production-grade embedded firmware update system with MCUboot A/B partition swapping, AWS IoT Core integration, and cryptographic image verification.
 
